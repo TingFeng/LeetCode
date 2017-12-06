@@ -1,0 +1,73 @@
+"""
+
+LeetCode #3
+Given a string, find the length of the longest substring without repeating characters.
+
+Examples:
+
+Given "abcabcbb", the answer is "abc", which the length is 3.
+
+Given "bbbbb", the answer is "b", with the length of 1.
+
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+
+Solution:
+scan string, check substring accordingly while updating maximum length
+
+Note: here use hash table, is more speed efficient
+
+      Following is a sample code that did not use hash table:
+      
+      
+        def lengthOfLongestSubstring(self, s):
+        
+            S=''
+            PreS=''
+            for x in s:
+                S=S+x
+
+                count=0
+                while count<len(S)-2 and S[count]!=x:
+                    count=count+1
+                if len(S)>1 and S[count]==x:
+                    if len(S)-1>len(PreS):
+                        PreS=S[:-1]
+                    S=S[count+1:]   
+
+            if len(S)>len(PreS):
+                return len(S)
+            else:
+                return len(PreS)            
+            
+
+"""
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        StrIndex={} # use hashtable to record characters
+
+        begin=0
+        MaxLength=0
+        
+        StringLen=len(s)
+       
+        for index in xrange(0,StringLen):       
+
+            x=s[index]
+
+            if x in StrIndex: 
+                if StrIndex[x]>=begin: # if this charcter was shown before and is included in the current substring
+                    MaxLength=max([MaxLength,index-begin])
+                    begin=StrIndex[x]+1
+
+            StrIndex[x]=index
+            
+        if StringLen>0:  # check it with the last substring, e.g. 'ababc'
+            MaxLength=max([MaxLength,index-begin+1])
+ 
+        return MaxLength      
