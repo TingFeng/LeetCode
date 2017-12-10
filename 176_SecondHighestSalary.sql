@@ -31,6 +31,9 @@ subquery or ifnull
 */
 
 
+
+-- subquery solution
+
 Select 
   (
     select salary from Employee
@@ -39,7 +42,8 @@ Select
   ) as SecondHighestSalary
   
   
-  /* or the ifnull solution
+ /* 
+  -- or the ifnull solution
   
   select
     ifnull(
@@ -49,3 +53,4 @@ Select
       limit 1 offset 1
       ), Null
       ) as SecondHighestSalary
+*/
